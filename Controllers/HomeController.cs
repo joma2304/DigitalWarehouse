@@ -1,31 +1,44 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using DigitalWarehouse.Models;
+using DigitalWarehouse.Data;  // Din DBContext
+using DigitalWarehouse.Models;  // Din produktmodell
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
-namespace DigitalWarehouse.Controllers;
-
-public class HomeController : Controller
+namespace DigitalWarehouse.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<HomeController> _logger;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        // Hämtar alla produkter och skickar dem till vyn
+        public IActionResult Index()
+        {
+            // Hämta alla produkter från databasen inklusive kategori
+            var products = _context.Products
+                                    .Include(p => p.Category)  // kategori
+                                    .ToList();
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            // Skicka produkterna till vyn
+            return View(products);
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
