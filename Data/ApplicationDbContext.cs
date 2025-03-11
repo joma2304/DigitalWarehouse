@@ -15,6 +15,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<ProductModel> Products { get; set; }
     public DbSet<CategoryModel> Categories { get; set; }
     public DbSet<StockChangeModel> StockChanges { get; set; }
+  
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
