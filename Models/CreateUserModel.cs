@@ -4,7 +4,7 @@ namespace DigitalWarehouse.Models
 {
 
 
-    public class CreateAdminModel
+    public class CreateUserModel
     {
         [Required]
         [EmailAddress]

@@ -1,12 +1,12 @@
-@model CreateAdminModel
+@model CreateUserModel
 
 @{
-    ViewData["Title"] = "Create admin user";
+    ViewData["Title"] = "Create user";
 }
 
-<h2>Create new admin user</h2>
+<h2>Create new user</h2>
 
-<form asp-action="CreateAdmin" method="post">
+<form asp-action="CreateUser" method="post">
     <div class="mb-3">
         <label asp-for="Email" class="form-label">Email</label>
         <input asp-for="Email" class="form-control" />
@@ -25,5 +25,5 @@
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create new admin user</button>
+    <button type="submit" class="btn btn-primary">Create new user</button>
 </form>

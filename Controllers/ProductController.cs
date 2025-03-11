@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalWarehouse.Controllers
 {
-    [Authorize (Roles = "Admin")]
+    [Authorize(Roles = "Admin, Worker")]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -159,7 +159,6 @@ namespace DigitalWarehouse.Controllers
             return View(productModel);
         }
 
-
         // GET: Product/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -179,6 +178,7 @@ namespace DigitalWarehouse.Controllers
             return View(productModel);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

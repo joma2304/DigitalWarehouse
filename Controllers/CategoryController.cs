@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalWarehouse.Controllers
 {
-    [Authorize (Roles = "Admin")]
+    [Authorize(Roles = "Admin, Worker")]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -136,6 +136,7 @@ namespace DigitalWarehouse.Controllers
             return View(categoryModel);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

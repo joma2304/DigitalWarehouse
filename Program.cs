@@ -49,26 +49,37 @@ using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    //Adminroll
-    var role = "Admin";
-    if (!await roleManager.RoleExistsAsync(role))
+    //Skapa roller
+    var roles = new[] { "Admin", "Worker" };
+    foreach (var role in roles)
     {
-        await roleManager.CreateAsync(new IdentityRole(role));
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
     }
 
-    //Skapa administratör
+
+    //Skapa Användare
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    var user = new { Email = "admin@warehouse.com", UserName = "admin@warehouse.com", Password = "Admin!123", Role = "Admin" };
-    ;
-    var IdentityUser = await userManager.FindByEmailAsync(user.Email);
-    if (IdentityUser == null)
-    {
-        IdentityUser = new IdentityUser { UserName = user.UserName, Email = user.Email };
-        await userManager.CreateAsync(IdentityUser, user.Password);
+    var users = new[] {
 
-        //Lägg till admin till Användaren
-        await userManager.AddToRoleAsync(IdentityUser, user.Role);
+        new { Email = "admin@warehouse.com", UserName = "admin@warehouse.com", Password = "Admin!123", Role = "Admin" },
+        new { Email = "jo.han98@hotmail.com", UserName = "jo.han98@hotmail.com", Password = "Password!123", Role = "Worker" }
+        };
+    foreach (var user in users)
+    {
+        var IdentityUser = await userManager.FindByEmailAsync(user.Email);
+        if (IdentityUser == null)
+        {
+            IdentityUser = new IdentityUser { UserName = user.UserName, Email = user.Email };
+            await userManager.CreateAsync(IdentityUser, user.Password);
+
+            //Lägg till användare till rollerna
+            await userManager.AddToRoleAsync(IdentityUser, user.Role);
+        }
     }
+
 }
 
 app.Run();

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalWarehouse.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Worker")]
     public class StockChangeController : Controller
     {
         private readonly ApplicationDbContext _context;

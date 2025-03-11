@@ -16,13 +16,13 @@ public class AdminController : Controller
         _roleManager = roleManager;
     }
 
-    public IActionResult CreateAdmin()
+    public IActionResult CreateUser()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAdmin(CreateAdminModel model)
+    public async Task<IActionResult> CreateUser(CreateUserModel model)
     {
         if (ModelState.IsValid)
         {
@@ -32,15 +32,15 @@ public class AdminController : Controller
             if (result.Succeeded)
             {
                 // Kontrollera om rollen "Admin" finns, annars skapa den
-                if (!await _roleManager.RoleExistsAsync("Admin"))
+                if (!await _roleManager.RoleExistsAsync("Worker"))
                 {
-                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("Worker"));
                 }
 
                 // Lägg till användaren i "Admin"-rollen
-                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userManager.AddToRoleAsync(user, "Worker");
 
-                return RedirectToAction("Index", "Home"); // Redirecta till startsidan
+                return RedirectToAction("Index", "Home"); //
             }
             else
             {
