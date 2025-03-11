@@ -1,6 +1,7 @@
 ﻿using DigitalWarehouse.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DigitalWarehouse.Data;
 
@@ -19,18 +20,15 @@ public class ApplicationDbContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-                    base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<ProductModel>()
+            .HasOne(p => p.Category)
+            .WithMany()
+            .HasForeignKey(p => p.CategoryId);
 
-            modelBuilder.Entity<ProductModel>()
-                .HasOne(p => p.Category)
-                .WithMany()
-                .HasForeignKey(p => p.CategoryId);
+        modelBuilder.Entity<StockChangeModel>()
+            .HasOne(qc => qc.Product)
+            .WithMany(p => p.StockChanges)
+            .HasForeignKey(qc => qc.ProductId);
+    }
 
-            modelBuilder.Entity<StockChangeModel>()
-                .HasOne(qc => qc.Product)
-                .WithMany(p => p.QuantityChanges)
-                .HasForeignKey(qc => qc.ProductId);
-        }
-
-    
 }

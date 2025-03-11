@@ -9,7 +9,7 @@ namespace DigitalWarehouse.Models
         public string? Name { get; set; }
         public string? Description { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         // public string? ImageUrl { get; set; } //Skulle kunna lägga till senare
         [Required]
         public int Amount { get; set; }
@@ -19,7 +19,7 @@ namespace DigitalWarehouse.Models
 
         public CategoryModel? Category { get; set; }
 
-        public ICollection<StockChangeModel> QuantityChanges { get; set; } = new List<StockChangeModel>();
+        public ICollection<StockChangeModel> StockChanges { get; set; } = new List<StockChangeModel>();
 
     }
 }

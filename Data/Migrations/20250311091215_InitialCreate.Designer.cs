@@ -3,6 +3,7 @@ using System;
 using DigitalWarehouse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DigitalWarehouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311091215_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
@@ -51,8 +54,8 @@ namespace DigitalWarehouse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -293,7 +296,7 @@ namespace DigitalWarehouse.Data.Migrations
             modelBuilder.Entity("DigitalWarehouse.Models.StockChangeModel", b =>
                 {
                     b.HasOne("DigitalWarehouse.Models.ProductModel", "Product")
-                        .WithMany("StockChanges")
+                        .WithMany("QuantityChanges")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -354,7 +357,7 @@ namespace DigitalWarehouse.Data.Migrations
 
             modelBuilder.Entity("DigitalWarehouse.Models.ProductModel", b =>
                 {
-                    b.Navigation("StockChanges");
+                    b.Navigation("QuantityChanges");
                 });
 #pragma warning restore 612, 618
         }
