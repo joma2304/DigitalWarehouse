@@ -4,28 +4,34 @@
     ViewData["Title"] = "Home";
 }
 
-<h2 class="text-center">Our products</h2>
+<h2 class="text-center mt-4 mb-4">Our Products</h2>
 
-<div class="row">
-    @foreach (var product in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title text-center">@product.Name</h5>
-                    <p class="card-text">Category: @product.Category?.Name</p>
-                    <p class="card-text">Description: @product.Description</p>
-                    <p class="card-text">Price: $@product.Price</p>
-                    @if (product.Amount > 0)
-                    {
-                        <p class="card-text">@product.Amount total in stock</p>
-                    }
-                    else
-                    {
-                        <p class="card-text">Not in stock</p>
-                    }
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var product in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-bold">@product.Name</h5>
+                        <p class="text-muted text-center">@product.Category?.Name</p>
+                        <p class="card-text">@product.Description</p>
+                        <p class="card-text"><strong>Price:</strong> $@product.Price</p>
+
+                        @if (product.Amount > 0)
+                        {
+                            <p class="card-text text-success fw-bold">In stock: @product.Amount</p>
+                        }
+                        else
+                        {
+                            <p class="card-text text-danger fw-bold">Out of stock</p>
+                        }
+
+                        <div class="d-flex justify-content-center">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>

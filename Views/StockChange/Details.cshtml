@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Stock history details</h1>
 
 <div>
-    <h4>StockChangeModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -17,13 +16,13 @@
             @Html.DisplayFor(model => model.Product.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ChangeAmount)
+           Change in stock
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ChangeAmount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ChangeDate)
+            Time of change
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ChangeDate)
@@ -31,6 +30,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

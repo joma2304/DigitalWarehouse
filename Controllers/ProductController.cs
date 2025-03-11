@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DigitalWarehouse.Data;
 using DigitalWarehouse.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalWarehouse.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
