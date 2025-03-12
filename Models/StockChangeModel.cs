@@ -10,5 +10,6 @@ namespace DigitalWarehouse.Models
         [Required]
         public int ChangeAmount { get; set; }
         public DateTime ChangeDate { get; set; } = DateTime.Now;
+
     }
 }

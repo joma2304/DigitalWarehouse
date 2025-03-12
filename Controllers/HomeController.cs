@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using DigitalWarehouse.Data;  // Din DBContext
-using DigitalWarehouse.Models;  // Din produktmodell
+using DigitalWarehouse.Data;  
+using DigitalWarehouse.Models;  
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ namespace DigitalWarehouse.Controllers
         // Hämtar alla produkter och skickar dem till vyn
         public IActionResult Index()
         {
-            // Hämta alla produkter från databasen inklusive kategori
+            // Hämta alla produkter från databasen + kategori
             var products = _context.Products
                                     .Include(p => p.Category)  // kategori
                                     .ToList();

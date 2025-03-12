@@ -22,10 +22,16 @@ namespace DigitalWarehouse.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Products.Include(p => p.Category);
-            return View(await applicationDbContext.ToListAsync());
+            var products = _context.Products.Include(p => p.Category).AsQueryable(); //Ha med kategori så att det syns
+
+            if (!string.IsNullOrEmpty(searchString)) // Input är ifyllt
+            {
+                products = products.Where(p => p.Name.ToLower().Contains(searchString.ToLower())); //Stora och små bokstäver
+            }
+
+            return View(await products.ToListAsync());
         }
 
         // GET: Product/Details/5
@@ -70,7 +76,7 @@ namespace DigitalWarehouse.Controllers
                 var stockChange = new StockChangeModel
                 {
                     ProductId = productModel.Id,
-                    ChangeAmount = productModel.Amount, // Initialt värde
+                    ChangeAmount = productModel.Amount, // Antal från början
                     ChangeDate = DateTime.UtcNow
                 };
 
