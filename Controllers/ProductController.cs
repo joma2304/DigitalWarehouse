@@ -21,18 +21,63 @@ namespace DigitalWarehouse.Controllers
             _context = context;
         }
 
-        // GET: Product
-        public async Task<IActionResult> Index(string searchString)
-        {
-            var products = _context.Products.Include(p => p.Category).AsQueryable(); //Ha med kategori så att det syns
+// GET: Product
+public async Task<IActionResult> Index(string searchString, string sortOrder)
+{
+    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+    ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
+    ViewData["DescriptionSortParm"] = sortOrder == "Description" ? "description_desc" : "Description";
+    ViewData["CategorySortParm"] = sortOrder == "Category" ? "category_desc" : "Category";
+    ViewData["AmountSortParm"] = sortOrder == "Amount" ? "amount_desc" : "Amount";
 
-            if (!string.IsNullOrEmpty(searchString)) // Input är ifyllt
-            {
-                products = products.Where(p => p.Name.ToLower().Contains(searchString.ToLower())); //Stora och små bokstäver
-            }
+    var products = _context.Products.Include(p => p.Category).AsQueryable();
 
-            return View(await products.ToListAsync());
-        }
+    if (!string.IsNullOrEmpty(searchString))
+    {
+        products = products.Where(p => p.Name.ToLower().Contains(searchString.ToLower()) ||
+                                        p.Description.ToLower().Contains(searchString.ToLower()) ||
+                                        p.Category.Name.ToLower().Contains(searchString.ToLower())); // Sök på namn, beskrivning och kategori
+    }
+
+    // Sortering
+    switch (sortOrder)
+    {
+        case "name_desc":
+            products = products.OrderByDescending(p => p.Name);
+            break;
+        case "Price":
+            products = products.OrderBy(p => p.Price);
+            break;
+        case "price_desc":
+            products = products.OrderByDescending(p => p.Price);
+            break;
+        case "Description":
+            products = products.OrderBy(p => p.Description);
+            break;
+        case "description_desc":
+            products = products.OrderByDescending(p => p.Description);
+            break;
+        case "Category":
+            products = products.OrderBy(p => p.Category.Name);
+            break;
+        case "category_desc":
+            products = products.OrderByDescending(p => p.Category.Name);
+            break;
+        case "Amount":
+            products = products.OrderBy(p => p.Amount);
+            break;
+        case "amount_desc":
+            products = products.OrderByDescending(p => p.Amount);
+            break;
+        default:
+            products = products.OrderBy(p => p.Name);
+            break;
+    }
+
+    return View(await products.ToListAsync());
+}
+
+
 
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)

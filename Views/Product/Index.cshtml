@@ -5,26 +5,48 @@
 }
 
 <h1>Products</h1>
+
 <form asp-controller="Product" asp-action="Index" method="get">
     <div class="input-group mb-3">
-        <input type="text" name="searchString" class="form-control" placeholder="Search for a product name..."
-            value="@Context.Request.Query["searchString"]">
+        <input type="text" name="searchString" class="form-control" placeholder="Search for name, description or category"
+               value="@Context.Request.Query["searchString"]">
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
 </form>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-primary btn-md rounded-pill shadow-sm">Create New</a>
 </p>
+
 <div class="table-responsive">
     <table class="table table-hover align-middle shadow-sm">
         <thead class="table-dark">
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Name)</th>
-                <th>@Html.DisplayNameFor(model => model.Description)</th>
-                <th>@Html.DisplayNameFor(model => model.Price)</th>
-                <th>@Html.DisplayNameFor(model => model.Amount)</th>
-                <th>@Html.DisplayNameFor(model => model.Category)</th>
+                <th>
+                    <a href="@Url.Action("Index", "Product", new { sortOrder = ViewData["NameSortParm"], searchString = Context.Request.Query["searchString"] })" class="text-white">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </a>
+                </th>
+                <th>
+                    <a href="@Url.Action("Index", "Product", new { sortOrder = ViewData["DescriptionSortParm"], searchString = Context.Request.Query["searchString"] })" class="text-white">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </a>
+                </th>
+                <th>
+                    <a href="@Url.Action("Index", "Product", new { sortOrder = ViewData["PriceSortParm"], searchString = Context.Request.Query["searchString"] })" class="text-white">
+                        @Html.DisplayNameFor(model => model.Price)
+                    </a>
+                </th>
+                <th>
+                    <a href="@Url.Action("Index", "Product", new { sortOrder = ViewData["AmountSortParm"], searchString = Context.Request.Query["searchString"] })" class="text-white">
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </a>
+                </th>
+                <th>
+                    <a href="@Url.Action("Index", "Product", new { sortOrder = ViewData["CategorySortParm"], searchString = Context.Request.Query["searchString"] })" class="text-white">
+                        Category
+                    </a>
+                </th>
                 <th class="text-center"></th>
                 <th class="text-center"></th>
                 <th class="text-center"></th>
@@ -68,3 +90,4 @@
         </tbody>
     </table>
 </div>
+
