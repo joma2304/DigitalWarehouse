@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using DigitalWarehouse.Data;  
-using DigitalWarehouse.Models;  
+using DigitalWarehouse.Data;
+using DigitalWarehouse.Models;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
