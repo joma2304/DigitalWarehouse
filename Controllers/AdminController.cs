@@ -22,6 +22,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
+    //Skapa ny användare
     public async Task<IActionResult> CreateUser(CreateUserModel model)
     {
         if (ModelState.IsValid)
@@ -31,16 +32,16 @@ public class AdminController : Controller
 
             if (result.Succeeded)
             {
-                // Kontrollera om rollen "Admin" finns, annars skapa den
+                // Kontrollera om rollen worker finns, annars skapa den
                 if (!await _roleManager.RoleExistsAsync("Worker"))
                 {
                     await _roleManager.CreateAsync(new IdentityRole("Worker"));
                 }
 
-                // Lägg till användaren i "Admin"-rollen
+                // Ge användare rollen som worker
                 await _userManager.AddToRoleAsync(user, "Worker");
 
-                return RedirectToAction("Index", "Home"); //
+                return RedirectToAction("Index", "Home");
             }
             else
             {

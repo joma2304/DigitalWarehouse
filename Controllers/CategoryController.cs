@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalWarehouse.Controllers
 {
-    [Authorize(Roles = "Admin, Worker")]
+    [Authorize(Roles = "Admin, Worker")] //skyddad för admin och worker
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalWarehouse.Controllers
 {
-    [Authorize(Roles = "Admin, Worker")]
+    [Authorize(Roles = "Admin, Worker")] //Skyddad för admin och worker
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,10 +36,10 @@ public async Task<IActionResult> Index(string searchString, string sortOrder)
     {
         products = products.Where(p => p.Name.ToLower().Contains(searchString.ToLower()) ||
                                         p.Description.ToLower().Contains(searchString.ToLower()) ||
-                                        p.Category.Name.ToLower().Contains(searchString.ToLower())); // Sök på namn, beskrivning och kategori
+                                        p.Category.Name.ToLower().Contains(searchString.ToLower())); // Går att söka efter namn, beskrivning och kategori
     }
 
-    // Sortering
+    // Sorteringar
     switch (sortOrder)
     {
         case "name_desc":
@@ -121,7 +121,7 @@ public async Task<IActionResult> Index(string searchString, string sortOrder)
                 var stockChange = new StockChangeModel
                 {
                     ProductId = productModel.Id,
-                    ChangeAmount = productModel.Amount, // Antal från början
+                    ChangeAmount = productModel.Amount, // Antal från början när en produkt skapats
                     ChangeDate = DateTime.UtcNow
                 };
 
@@ -174,18 +174,18 @@ public async Task<IActionResult> Index(string searchString, string sortOrder)
                         return NotFound();
                     }
 
-                    int difference = productModel.Amount - existingProduct.Amount;
+                    int difference = productModel.Amount - existingProduct.Amount; //skillnad mellan nuvarande amount och det nya amount
 
                     _context.Update(productModel);
                     await _context.SaveChangesAsync();
 
-                    // Skapa en lagersaldoändring om Amount har förändrats
+                    // Skapa en lagersaldoändring om Amount har förändrats för produkt
                     if (difference != 0)
                     {
                         var stockChange = new StockChangeModel
                         {
                             ProductId = productModel.Id,
-                            ChangeAmount = difference,
+                            ChangeAmount = difference, //skillnaden i amount blir förändningen
                             ChangeDate = DateTime.UtcNow
                         };
 
