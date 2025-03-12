@@ -24,7 +24,9 @@ namespace DigitalWarehouse.Controllers
         // GET: StockChange
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.StockChanges.Include(s => s.Product);
+            var applicationDbContext = _context.StockChanges
+            .Include(s => s.Product)
+            .OrderByDescending(s => s.ChangeDate); //Sortera så att nyast är överst
             return View(await applicationDbContext.ToListAsync());
         }
 

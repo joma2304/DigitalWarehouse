@@ -11,6 +11,11 @@ a {
   color: #0077cc;
 }
 
+.custom-bg {
+  background-color: #ebebeb;
+}
+
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

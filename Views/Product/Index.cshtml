@@ -7,7 +7,7 @@
 <h1>Products</h1>
 <form asp-controller="Product" asp-action="Index" method="get">
     <div class="input-group mb-3">
-        <input type="text" name="searchString" class="form-control" placeholder="Search for a product..."
+        <input type="text" name="searchString" class="form-control" placeholder="Search for a product name..."
             value="@Context.Request.Query["searchString"]">
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
@@ -16,52 +16,55 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-hover align-middle shadow-sm">
+        <thead class="table-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.Amount)</th>
+                <th>@Html.DisplayNameFor(model => model.Category)</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Details</th>
+                <th class="text-center">Delete</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody class="bg-light">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@Html.DisplayFor(modelItem => item.Name)</strong></td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td><span class="fw-bold text-success">$@Html.DisplayFor(modelItem => item.Price)</span></td>
+                    <td>
+                        @if (item.Amount > 0)
+                        {
+                            <span class="badge bg-success">@item.Amount</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Out of stock</span>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm w-md-auto">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm w-md-auto">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm w-md-auto">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
