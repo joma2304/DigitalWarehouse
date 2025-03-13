@@ -5,6 +5,7 @@
 }
 
 <h1>Products</h1>
+<p>Here, you can browse through the selection of available products, categorized for easy navigation. If you are signed in as a worker you can add, edit and view details. If you're an admin you can also delete products. When adding and editing a product, the minimum amount in stock is always 0. Click on the different titles to sort.</p>
 
 <form asp-controller="Product" asp-action="Index" method="get">
     <div class="input-group mb-3">
@@ -80,11 +81,13 @@
                             <i class="bi bi-eye"></i> Details
                         </a>
                     </td>
+                    @if (User.IsInRole("Admin")){
                     <td class="text-center">
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm w-md-auto">
                             <i class="bi bi-trash"></i> Delete
                         </a>
                     </td>
+                    }
                 </tr>
             }
         </tbody>
