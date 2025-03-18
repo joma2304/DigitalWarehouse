@@ -10,7 +10,7 @@ namespace DigitalWarehouse.Models
         public string? Description { get; set; }
         [Required]
         public int Price { get; set; }
-        // public string? ImageUrl { get; set; } //Skulle kunna lägga till senare
+  
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Amount cannot be less than zero.")]
         public int Amount { get; set; }

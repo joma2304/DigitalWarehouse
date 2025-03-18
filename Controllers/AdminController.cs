@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using DigitalWarehouse.Models; // Om du skapar en modell för vyn
 
-[Authorize(Roles = "Admin")] // Endast admin kan skapa fler admins
+[Authorize(Roles = "Admin")] // Endast admin kan skapa fler användare
 public class AdminController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
